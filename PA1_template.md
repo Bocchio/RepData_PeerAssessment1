@@ -17,7 +17,7 @@ activity_data$date <- as.Date(activity_data$date)
 library(ggplot2)
 histogram <- ggplot(activity_data, aes(x=date, y=steps))
 histogram <- histogram + geom_histogram(stat="identity") +
-             ylab("Steps") + xlab("Date")
+             ylab("Steps") + xlab("Date") + ggtitle("total number of steps taken each day")
 print(histogram)
 ```
 
@@ -67,7 +67,7 @@ for(inter in intervals){
 df <- data.frame(steps=steps_interval, inter=intervals)
 graph <- ggplot(df, aes(x=inter, y=steps))
 graph <- graph + geom_line() + xlab("Interval") +
-         ylab("Average number of steps")
+         ylab("Average number of steps") + ggtitle("average number of steps taken (averaged across all days) versus the 5-minute intervals")
 print(graph)
 ```
 
@@ -97,7 +97,7 @@ sum(as.numeric(na_values))
 ## [1] 2304
 ```
 
-Replacing the missing values could be done by using the mean for that 5-minute interval
+Replacing the missing values could be done by using the mean for that 5-minute interval. Doing that, each previously missing value, now has the median of that interval across all days.
 
 
 ```r
@@ -117,7 +117,7 @@ Then it's possible to make a new histogram but with this filled data frame
 ```r
 histogram2 <- ggplot(new_data, aes(x=date, y=steps))
 histogram2 <- histogram + geom_histogram(stat="identity") +
-             ylab("Steps") + xlab("Date")
+             ylab("Steps") + xlab("Date") + ggtitle("histogram of the total number of steps taken each day after missing values were imputed")
 print(histogram2)
 ```
 

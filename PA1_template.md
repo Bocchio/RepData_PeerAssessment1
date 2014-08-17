@@ -162,7 +162,7 @@ median(steps_each_day2)
 ```
 ## [1] 10766
 ```
-```
+
 With this new data the mean is the same as the median. The median compared to
 the median of the data without missing values is almost the same. We can say
 that there's no significant impact in not taken into account missing values or

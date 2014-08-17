@@ -114,7 +114,7 @@ Finally we calculate the median
 ```{r}
 median(steps_each_day2)
 ```
-```
+
 With this new data the mean is the same as the median. The median compared to
 the median of the data without missing values is almost the same. We can say
 that there's no significant impact in not taken into account missing values or
@@ -122,8 +122,10 @@ replacing them.
 ## Are there differences in activity patterns between weekdays and weekends?
 
 ```{r}
+
 days <- c("weekend", "weekday", "weekday", "weekday", "weekday", "weekday", "weekend")[as.POSIXlt(new_data$date)$wday + 1]
 new_data$week <- as.factor(days)
+
 ```
 
 Now graph steps in weekdays in contrast to steps in weekend days

@@ -327,15 +327,14 @@ for(day in unique(as.factor(new_data$date))){
 <pre><code>## [1] 10766
 </code></pre>
 
-<pre><code>With this new data the mean is the same as the median. The median compared to
+<p>With this new data the mean is the same as the median. The median compared to
 the median of the data without missing values is almost the same. We can say
 that there&#39;s no significant impact in not taken into account missing values or
-replacing them.
-## Are there differences in activity patterns between weekdays and weekends?
+replacing them.</p>
 
+<h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 
-```r
-days &lt;- c(&quot;weekend&quot;, &quot;weekday&quot;, &quot;weekday&quot;, &quot;weekday&quot;, &quot;weekday&quot;, &quot;weekday&quot;, &quot;weekend&quot;)[as.POSIXlt(new_data$date)$wday + 1]
+<pre><code class="r">days &lt;- c(&quot;weekend&quot;, &quot;weekday&quot;, &quot;weekday&quot;, &quot;weekday&quot;, &quot;weekday&quot;, &quot;weekday&quot;, &quot;weekend&quot;)[as.POSIXlt(new_data$date)$wday + 1]
 new_data$week &lt;- as.factor(days)
 </code></pre>
 

@@ -2,7 +2,8 @@
 
 
 ## Loading and preprocessing the data
-```{r}
+
+```r
 activity_data <- read.csv(unz("activity.zip", "activity.csv"))
 #Removing missing values
 na_values <- is.na(activity_data$steps)
@@ -11,7 +12,8 @@ activity_data$date <- as.Date(activity_data$date)
 ```
 
 ## What is mean total number of steps taken per day?
-```{r, fig.width=9}
+
+```r
 library(ggplot2)
 histogram <- ggplot(activity_data, aes(x=date, y=steps))
 histogram <- histogram + geom_histogram(stat="identity") +
@@ -19,9 +21,12 @@ histogram <- histogram + geom_histogram(stat="identity") +
 print(histogram)
 ```
 
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
+
 The mean and median can be calculated in R; in order to do so, first we take the numbers of steps for each day.
 
-```{r}
+
+```r
 steps_each_day <- c()
 for(day in unique(as.factor(activity_data$date))){
     stepsday <- sum(activity_data[activity_data$date == day,1])
@@ -30,18 +35,29 @@ for(day in unique(as.factor(activity_data$date))){
 ```
 
 Then we calculate the mean
-```{r}
+
+```r
 mean(steps_each_day)
 ```
+
+```
+## [1] 10766
+```
 Finally we calculate the median
-```{r}
+
+```r
 median(steps_each_day)
+```
+
+```
+## [1] 10765
 ```
 ```
 
 ## What is the average daily activity pattern?
 
-```{r, fig.width=9}
+
+```r
 steps_interval <- c()
 intervals <- unique(activity_data$interval)
 for(inter in intervals){
@@ -55,25 +71,36 @@ graph <- graph + geom_line() + xlab("Interval") +
 print(graph)
 ```
 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
+
 The interval with the maximum number of steps on average
 
-```{r}
 
+```r
 df[which.max(df[,1]),2]
+```
 
+```
+## [1] 835
 ```
 
 ## Imputing missing values
 
 To calculate the total number of missing values
 
-```{r}
+
+```r
 sum(as.numeric(na_values))
+```
+
+```
+## [1] 2304
 ```
 
 Replacing the missing values could be done by using the mean for that 5-minute interval
 
-```{r}
+
+```r
 new_data <- read.csv(unz("activity.zip", "activity.csv"))
 for(value in 1:length(new_data[,1])){
     if(is.na(new_data[value,1])){
@@ -86,19 +113,30 @@ for(value in 1:length(new_data[,1])){
 
 Then it's possible to make a new histogram but with this filled data frame
 
-```{r, fig.width=9}
+
+```r
 histogram2 <- ggplot(new_data, aes(x=date, y=steps))
 histogram2 <- histogram + geom_histogram(stat="identity") +
              ylab("Steps") + xlab("Date")
 print(histogram2)
 ```
 
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
+
 The graph doesn't differ much at first sight. It's necessary to calculate the
 mean and median for this data to be sure.
 
-```{r}
+
+```r
 new_data$date <- as.Date(new_data$date)
 print(class(new_data$date))
+```
+
+```
+## [1] "Date"
+```
+
+```r
 steps_each_day2 <- c()
 for(day in unique(as.factor(new_data$date))){
     stepsday <- sum(new_data[new_data$date == day,1])
@@ -107,12 +145,22 @@ for(day in unique(as.factor(new_data$date))){
 ```
 
 We calculate the mean
-```{r}
+
+```r
 mean(steps_each_day2)
 ```
+
+```
+## [1] 10766
+```
 Finally we calculate the median
-```{r}
+
+```r
 median(steps_each_day2)
+```
+
+```
+## [1] 10766
 ```
 ```
 With this new data the mean is the same as the median. The median compared to
@@ -121,14 +169,16 @@ that there's no significant impact in not taken into account missing values or
 replacing them.
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r}
+
+```r
 days <- c("weekend", "weekday", "weekday", "weekday", "weekday", "weekday", "weekend")[as.POSIXlt(new_data$date)$wday + 1]
 new_data$week <- as.factor(days)
 ```
 
 Now graph steps in weekdays in contrast to steps in weekend days
 
-```{r, fig.width=9}
+
+```r
 intervals <- unique(activity_data$interval)
 steps_weekdays <- c()
 steps_weekend <- c()
@@ -147,3 +197,5 @@ graph2 <- graph2 + geom_line() + facet_grid(Week ~ .) +
           xlab("Interval") + ylab("Average number of steps")
 print(graph2)
 ```
+
+![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15.png) 
